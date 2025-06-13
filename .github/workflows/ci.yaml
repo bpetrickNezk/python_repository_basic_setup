@@ -4,7 +4,6 @@ on: push
 
 env:
   PYTEST_ON_CI: True
-  UV_CACHE_DIR: .uv-cache
 
 jobs:
   ci:
@@ -14,18 +13,12 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install uv
-        run: pipx install uv
+        uses: astral-sh/setup-uv@v5
 
-      - name: Configure Python version
-        uses: actions/setup-python@v4
+      - name: "Set up Python"
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
-          cache: 
-              - key:
-                files:
-                - uv.lock
-                paths:
-                  - $UV_CACHE_DIR
+          python-version-file: "pyproject.toml"
 
       - name: Install dependencies
         run: uv sync --all-groups --frozen
@@ -47,6 +40,3 @@ jobs:
 
       - name: Run tests with code coverage report
         run: uv run pytest tests --cov=src --cov-report term-missing
-
-      - name: clean up
-        run: uv cache prune --ci
