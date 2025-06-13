@@ -4,6 +4,7 @@ on: push
 
 env:
   PYTEST_ON_CI: True
+  UV_CACHE_DIR: .uv-cache
 
 jobs:
   ci:
@@ -19,7 +20,12 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.13'
-          cache: 'uv'
+          cache: 
+              - key:
+                files:
+                - uv.lock
+                paths:
+                  - $UV_CACHE_DIR
 
       - name: Install dependencies
         run: uv sync --all-groups --frozen
@@ -41,3 +47,6 @@ jobs:
 
       - name: Run tests with code coverage report
         run: uv run pytest tests --cov=src --cov-report term-missing
+
+      - name: clean up
+        run: uv cache prune --ci
