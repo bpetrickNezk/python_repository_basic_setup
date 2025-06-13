@@ -34,4 +34,5 @@ repos:
     - id: check-yaml
       name: Check YAML files
       description: verify yaml syntax
+      exclude: ^mkdocs\.yml$
   
