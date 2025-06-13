@@ -1,0 +1,43 @@
+[project]
+name = "python-repository-basic-setup"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+
+# consider splitting the dependencies into development (dev) and production
+dependencies = [
+    "ipykernel>=6.29.5",
+    "jupyter>=1.1.1",
+    "pandas>=2.3.0",
+    "pandera>=0.24.0",
+    "pre-commit>=4.2.0",
+    "pre-commit-hooks>=5.0.0",
+    "pytest>=8.4.0",
+    "pytest-cov>=6.2.1",
+    "pytest-coverage>=0.0",
+    "pytest-mock>=3.14.1",
+    "ruff>=0.11.13",
+]
+
+
+
+# config for test coverage
+[tool.coverage.run]
+branch = true
+parallel = true
+
+[tool.coverage.report]
+fail_under = 90
+precision = 0
+show_missing = true
+skip_covered = false
+skip_empty = false
+sort = "Cover"
+omit = [
+    # ignore tests in coverage
+    "tests/*",
+    ]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

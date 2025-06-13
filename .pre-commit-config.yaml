@@ -1,0 +1,37 @@
+default_stages: [pre-commit, pre-push]
+fail_fast: false 
+repos:
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  # Ruff version.
+  rev: v0.11.13
+  hooks:
+    - id: ruff
+      description: Run the linter for the src code
+      args: [--fix, --config=ruff.toml, --exclude=tests]
+    - id: ruff-format
+      description: Run the formatter for the src code
+      args: [--config=ruff.toml, --exclude=tests]
+    - id: ruff
+      description: Run the linter for the tests, but fix only -> no fail
+      args: [--fix-only, --config=ruff.toml]
+    - id: ruff-format
+      description: Run the formatter for tests
+      args: [--config=ruff.toml]
+
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v5.0.0
+  hooks:
+    - id: detect-private-key
+      name: Private key detection
+      description: Checks for the existence of private keys.
+    - id: check-json
+      name: Check JSON files
+      description: verify json syntax.
+      exclude: .vscode/settings.json
+    - id: check-toml
+      name: Check TOML files
+      description: verify toml syntax.
+    - id: check-yaml
+      name: Check YAML files
+      description: verify yaml syntax
+  
